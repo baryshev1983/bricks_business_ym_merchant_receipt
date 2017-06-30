@@ -22,7 +22,7 @@ class MerchantReceipt implements JsonSerializableInterface{
   /**
    * Упрощенная (доходы минус расходы).
    */
-  const TAX_SYSTEM_SIMPLE_PROFIT = 2;
+  const TAX_SYSTEM_SIMPLE_PROFIT = 3;
 
   /**
    * Единый налог на вмененный доход.
