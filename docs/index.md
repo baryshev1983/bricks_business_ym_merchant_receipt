@@ -2,7 +2,7 @@
 
 Класс _MerchantReceipt_ используется для представления всех параметров, необходимых для формирования чека с использованием [протокола Яндекс.Деньги][]. Он реализует интерфейс _JsonSerializableInterface_, что позволяет вызывать метод _toJson_ для формирования JSON-строки из его экземпляра.
 
-    **Важно:**: стандартный интерфейс библиотеки PHP _JsonSerializable_ не применяется по причине отсутствия возможности генерировать JSON с указанным числом разрядов после запятой для дробных чисел.
+**Важно:**: стандартный интерфейс библиотеки PHP _JsonSerializable_ не применяется по причине отсутствия возможности генерировать JSON с указанным числом разрядов после запятой для дробных чисел.
 
 Пример:
 
@@ -13,11 +13,11 @@ $itemList->add(new Item('Кружка для чая, шт., скидка 10%', 2
 $merchantReceipt = new MerchantReceipt('+79001231212', MerchantReceipt::TAX_SYSTEM_GENERAL, $itemList);
 
 echo sprintf(
-    "<input type='hidden' name='ym_merchant_receipt', value=''>",
+    "<input type='hidden' name='ym_merchant_receipt', value='%s'>",
     $merchantReceipt->toJson()
 );
 echo sprintf(
-    "<input type='hidden' name='sum', value=''>",
+    "<input type='hidden' name='sum', value='%s'>",
     $merchantReceipt->getItems()->getSum()
 );
 ```
