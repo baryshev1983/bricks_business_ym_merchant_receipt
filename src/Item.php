@@ -89,7 +89,7 @@ class Item implements JsonSerializableInterface{
     if(!is_string($text)){
       throw InvalidArgumentException::fromParam('text', 'string', $text);
     }
-    $textLen = strlen($text);
+    $textLen = mb_strlen($text);
     if($textLen < 1 || $textLen > 64){
       throw new InvalidArgumentException(sprintf(
         'Length the "text" should be "[0-64]" chars, "%s" given.',

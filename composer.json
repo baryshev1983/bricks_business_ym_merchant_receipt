@@ -9,7 +9,8 @@
         }
     ],
     "require": {
-      "php": ">=5.5.0 || ^7.0"
+      "php": ">=5.5.0 || ^7.0",
+	  "ext-mbstring": "*"
     },
 	"require-dev": {
 		"phpunit/PHPUnit": "^6.0"
