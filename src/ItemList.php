@@ -3,7 +3,7 @@ namespace Bricks\Business\YmMerchantReceipt;
 
 use IteratorAggregate;
 use ArrayIterator;
-use Bricks\Business\YmMerchantReceipt\Exception\InvalidArgumentException;
+use Bricks\Business\YmMerchantReceipt\Exception\OverflowException;
 
 /**
  * Список товаров в заказе.
@@ -22,8 +22,13 @@ class ItemList implements JsonSerializableInterface, IteratorAggregate{
 
   /**
    * Добавляет товар в список.
+   *
+   * @throws OverflowException
    */
   public function add(Item $item){
+    if(count($this->list) == 100){
+      throw new OverflowException('This list is filled');
+    }
     $this->list[] = $item;
   }
 

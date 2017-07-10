@@ -81,13 +81,22 @@ class Item implements JsonSerializableInterface{
    * @param Price $price Стоимость за единицу продукта.
    * @param int $tax Ставка НДС.
    *
+   * @throws InvalidArgumentException
+   *
    * @see self::TAX_*
    */
   public function __construct($text, $quantity, Price $price, $tax){
     if(!is_string($text)){
       throw InvalidArgumentException::fromParam('text', 'string', $text);
     }
-    $this->text = substr($text, 0, 64);
+    $textLen = strlen($text);
+    if($textLen < 1 || $textLen > 64){
+      throw new InvalidArgumentException(sprintf(
+        'Length the "text" should be "[0-64]" chars, "%s" given.',
+        $textLen
+      ));
+    }
+    $this->text = $text;
     if(!is_string($quantity) && !is_int($quantity) && !is_float($quantity)){
       throw InvalidArgumentException::fromParam('quantity', 'float|int|string', $quantity);
     }
@@ -142,7 +151,7 @@ class Item implements JsonSerializableInterface{
       $this->quantity,
       $this->price->toJson(),
       $this->tax,
-      addcslashes($this->text, '"')
+      addcslashes(addcslashes($this->text, '/'), '"')
     );
   }
 }

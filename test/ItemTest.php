@@ -27,6 +27,11 @@ class ItemTest extends TestCase{
     new Item(1, 1, $this->defaultPrice, Item::TAX_NO);
   }
 
+  public function testConstruct_testInvalidTextLength(){
+    $this->expectException(InvalidArgumentException::class);
+    new Item(str_repeat('a', 65), 1, $this->defaultPrice, Item::TAX_NO);
+  }
+
   public function testConstruct_testInvalidQuantity(){
     $this->expectException(InvalidArgumentException::class);
     new Item('text', [], $this->defaultPrice, Item::TAX_NO);
@@ -44,8 +49,8 @@ class ItemTest extends TestCase{
 
   public function testToJson(){
     $this->assertEquals(
-      '{"quantity":1.000,"price":{"amount":10.50,"currency":"RUB"},"tax":1,"text":"Зеленый чай \"Юн Ву\", кг"}',
-      (new Item('Зеленый чай "Юн Ву", кг', 1, new Price(10.5), Item::TAX_NO))->toJson()
+      '{"quantity":1.000,"price":{"amount":10.50,"currency":"RUB"},"tax":1,"text":"Зеленый чай \"Юн Ву\", \/кг"}',
+      (new Item('Зеленый чай "Юн Ву", /кг', 1, new Price(10.5), Item::TAX_NO))->toJson()
     );
   }
 }

@@ -22,6 +22,8 @@ class Price implements JsonSerializableInterface{
   /**
    * @param float $amount Цена за единицу.
    * @param string $currency [optional] Трехсимвольный код валюты.
+   *
+   * @throws InvalidArgumentException
    */
   public function __construct($amount, $currency = 'RUB'){
     if(!is_string($amount) && !is_int($amount) && !is_float($amount)){
