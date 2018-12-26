@@ -8,7 +8,88 @@ use Bricks\Business\YmMerchantReceipt\Exception\InvalidArgumentException;
  *
  * @author Artur Sh. Mamedbekov
  */
-class Item implements JsonSerializableInterface{
+class Item implements JsonSerializableInterface
+{
+    /**
+     * Типы Оплаты "Предоплата 100%. Полная предварительная оплата до момента
+     * передачипредмета расчета"
+     */
+    const PAYMENT_FULL_PREPAYMENT = 'full_prepayment';
+
+    /**
+     * Типы Оплаты "Предоплата. Частичная
+     * предварительная оплата до момента передачипредмета расчета"
+     */
+    const PAYMENT_PREPAYMENT = 'prepayment';
+
+    /**
+     * Типы Оплаты "Аванс"
+     */
+    const PAYMENT_ADVANCE = 'advance';
+
+    /**
+     * Типы Оплаты "Полный расчет. Полная оплата, в том числе с учетом аванса
+     * (предварительной оплаты) в момент передачи предмета расчета"
+     */
+    const PAYMENT_FULL_PAYMENT = 'full_payment';
+
+    /**
+     * Типы Оплаты "Частичный расчет и кредит. Частичная оплата предмета расчета в момент
+     * его передачи с последующей оплатой в кредит"
+     */
+    const PAYMENT_PARTIAL_PAYMENT = 'partial_payment';
+
+    /**
+     * Типы Оплаты "Передача в кредит. Передача предмета расчета без его оплаты в момент его
+     * передачи с последующей оплатой в кредит."
+     */
+    const PAYMENT_CREDIT = 'credit';
+
+    /**
+     * Типы Оплаты "Оплата кредита. Оплата предмета расчета после его передачи с оплатой
+     * в кредит (оплата кредита)"
+     */
+    const PAYMENT_CREDIT_PAYMENT = 'credit_payment';
+
+    /** товар */
+    const PAYMENT_BY_COMMODITY = 'commodity';
+
+    /** подакцизный товар */
+    const PAYMENT_BY_EXCISE = 'excise';
+
+    /** работа */
+    const PAYMENT_BY_JOB = 'job';
+
+    /** услуга */
+    const PAYMENT_BY_SERVICE = 'service';
+
+    /** ставка в азартной игре  */
+    const PAYMENT_BY_GAMBLING_BET = 'gambling_bet';
+
+    /** выигрыш в азартной игре */
+    const PAYMENT_BY_GAMBLING_PRIZE = 'gambling_prize';
+
+    /** лотерейный билет */
+    const PAYMENT_BY_LOTTERY = 'lottery';
+
+    /** выигрыш в лотерею */
+    const PAYMENT_BY_LOTTERY_PRIZE = 'lottery_prize';
+
+    /** результаты интеллектуальной деятельности */
+    const PAYMENT_BY_INTELLECTUAL_ACTIVITY = 'intellectual_activity';
+
+    /** платеж */
+    const PAYMENT_BY_PAYMENT = 'payment';
+
+    /** агентское вознаграждение */
+    const PAYMENT_BY_AGENT_COMMISSION = 'agent_commission';
+
+    /** несколько вариантов */
+    const PAYMENT_BY_COMPOSITE = 'composite';
+
+    /** другое */
+    const PAYMENT_BY_ANOTHER = 'another';
+
   /**
    * Без НДС.
    */
@@ -142,16 +223,19 @@ class Item implements JsonSerializableInterface{
     return $this->text;
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function toJson(){
-    return sprintf(
-      '{"quantity":%01.3f,"price":%s,"tax":%s,"text":"%s"}',
-      $this->quantity,
-      $this->price->toJson(),
-      $this->tax,
-      addcslashes(addcslashes($this->text, '/'), '"')
-    );
-  }
+    /**
+     * @return string
+     */
+    public function toJson(): string
+    {
+        return sprintf(
+            '{"quantity":%01.3f,"price":%s,"tax":%s,"text":"%s","paymentMethodType":"%s","paymentSubjectType":"%s"}',
+            $this->quantity,
+            $this->price->toJson(),
+            $this->tax,
+            addcslashes(addcslashes($this->text, '/'), '"'),
+            self::PAYMENT_FULL_PREPAYMENT,
+            self::PAYMENT_BY_ANOTHER
+        );
+    }
 }
